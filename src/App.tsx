@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { Routes, Route, NavLink, Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Routes, Route, NavLink, Link, useLocation, useParams } from 'react-router-dom'
 import {
   ArrowRight,
   BadgeCheck,
@@ -215,6 +215,11 @@ function SectionHeader({ kicker, title, description }: { kicker: string; title: 
 function SiteHeader() {
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [location.pathname])
 
   return (
     <header className={`sticky top-0 z-50 border-b border-slate-200 ${isHome ? 'bg-slate-950/80 text-white backdrop-blur' : 'bg-white/90 text-slate-900 backdrop-blur'}`}>
@@ -246,10 +251,42 @@ function SiteHeader() {
           ))}
         </nav>
 
-        <Link to="/contact" className="hidden rounded-md bg-amber-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400 lg:inline-flex">
-          Start a Project
-        </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link to="/contact" className="rounded-md bg-amber-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400">
+            Start a Project
+          </Link>
+        </div>
+
+        <button
+          type="button"
+          aria-label="Toggle menu"
+          onClick={() => setMobileOpen((value) => !value)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 text-slate-700 lg:hidden"
+        >
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
+
+      {mobileOpen && (
+        <div className="border-t border-slate-200 bg-white lg:hidden">
+          <div className="section-shell flex flex-col gap-2 py-4">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  isActive ? 'rounded-md bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700' : 'rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100'
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <Link to="/contact" className="mt-3 inline-flex items-center justify-center rounded-md bg-amber-500 px-4 py-3 text-sm font-semibold text-slate-950">
+              Start a Project
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
@@ -597,7 +634,7 @@ function ProjectsPage() {
 }
 
 function ProjectDetailPage() {
-  const slug = window.location.pathname.split('/').pop() || ''
+  const { slug } = useParams()
   const project = projectData.find((item) => item.slug === slug) || projectData[0]
 
   usePageTitle(project.title)
