@@ -1,0 +1,98 @@
+/// <reference types="vite/client" />
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: #111827;
+  background-color: #f8f8f8;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f5f5f5;
+  color: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.section-shell {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.section-kicker {
+  @apply text-xs font-semibold uppercase tracking-[0.22em] text-amber-600;
+}
+
+.section-title {
+  @apply mt-4 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl;
+}
+
+.section-copy {
+  @apply mt-4 max-w-2xl text-base text-slate-600 md:text-lg;
+}
+
+.card-surface {
+  @apply rounded-2xl border border-slate-200 bg-white shadow-soft;
+}
+
+.primary-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md bg-amber-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-amber-400;
+}
+
+.secondary-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20;
+}
+
+.grid-surface {
+  background-image: linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.fade-in {
+  animation: fadeIn 0.7s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
